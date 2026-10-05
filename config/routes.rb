@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
+  get "ui_kit/index"
   root "pages#home"
+
+  # Роут для UI Kit (будет работать только в режиме разработки)
+  if Rails.env.development?
+    get "ui_kit", to: "ui_kit#index"
+  end
 
   devise_for :users
 

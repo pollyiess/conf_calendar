@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_04_101952) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_05_050454) do
+  create_table "conferences", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.date "start_date"
+    t.date "end_date"
+    t.date "submission_deadline"
+    t.string "location"
+    t.string "website_url"
+    t.boolean "is_scopus"
+    t.boolean "is_elibrary"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false

@@ -1,59 +1,16 @@
-<div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-  <!-- Панель фильтров -->
-  <aside class="lg:col-span-1 bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6 self-start">
-    <h2 class="text-lg font-bold text-gray-900 border-b pb-2">Фильтры</h2>
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Предстоящие конференции</h1>
+    <span class="text-sm text-slate-500 font-medium">Найдено: <%= @conferences.count %></span>
+  </div>
 
-    <div>
-      <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Сроки подачи</h3>
-      <div class="space-y-2">
-        <label class="flex items-center text-sm text-gray-700 cursor-pointer">
-          <input type="checkbox" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-2">
-          Открыт прием тезисов
-        </label>
-        <label class="flex items-center text-sm text-gray-700 cursor-pointer">
-          <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-2">
-          Ближайшие (< 30 дней)
-        </label>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% if @conferences.any? %>
+      <%= render partial: "components/conference_card", collection: @conferences, as: :conference %>
+    <% else %>
+      <div class="col-span-full py-12 text-center bg-white rounded-2xl border border-slate-200">
+        <p class="text-slate-500 text-sm">Предстоящих конференций пока нет.</p>
       </div>
-    </div>
-
-    <div>
-      <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Индексация</h3>
-      <div class="space-y-2">
-        <label class="flex items-center text-sm text-gray-700 cursor-pointer">
-          <input type="checkbox" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-2"> Scopus / WoS
-        </label>
-        <label class="flex items-center text-sm text-gray-700 cursor-pointer">
-          <input type="checkbox" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-2"> eLibrary (РИНЦ)
-        </label>
-        <label class="flex items-center text-sm text-gray-700 cursor-pointer">
-          <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-2"> CORE A* / A
-        </label>
-      </div>
-    </div>
-  </aside>
-
-  <!-- Список конференций -->
-  <section class="lg:col-span-3 space-y-4">
-    <div class="flex justify-between items-center">
-      <h1 class="text-xl font-bold text-gray-900">Каталог конференций</h1>
-      <span class="text-xs text-gray-500">Демонстрационный режим</span>
-    </div>
-
-    <!-- Пример карточки -->
-    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-blue-300 transition">
-      <div>
-        <div class="flex items-center gap-2 mb-1">
-          <span class="bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded">CORE A*</span>
-          <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Scopus</span>
-        </div>
-        <h2 class="text-lg font-bold text-gray-900">ICML 2026 — International Conference on Machine Learning</h2>
-        <p class="text-sm text-gray-500">📍 Ванкувер, Канада • 14–20 Июля 2026</p>
-      </div>
-      <div class="text-right min-w-[180px]">
-        <span class="text-xs font-semibold text-red-600 block">Дедлайн тезисов: 12 Сен 2026</span>
-        <span class="bg-red-50 text-red-700 text-xs px-3 py-1.5 rounded-full inline-block mt-1 font-bold border border-red-200">🔥 Осталось: 9 дней</span>
-      </div>
-    </div>
-  </section>
+    <% end %>
+  </div>
 </div>
