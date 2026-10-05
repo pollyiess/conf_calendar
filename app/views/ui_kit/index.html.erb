@@ -1,0 +1,99 @@
+<div class="max-w-6xl mx-auto px-4 py-8 space-y-12">
+  <div class="border-b pb-4">
+    <h1 class="text-3xl font-extrabold text-slate-900">UI Kit — ConfCalendar</h1>
+    <p class="text-slate-500 text-sm mt-1">Витрина переиспользуемых компонентов интерфейса</p>
+  </div>
+
+  <!-- 1. КНОПКИ -->
+  <section class="space-y-4">
+    <h2 class="text-xl font-bold text-slate-800">1. Кнопки (Buttons)</h2>
+    <div class="flex flex-wrap gap-4 items-center">
+      <button class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-xl transition duration-150 shadow-sm active:scale-95">
+        Primary Button
+      </button>
+
+      <button class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm rounded-xl transition duration-150 active:scale-95">
+        Secondary Button
+      </button>
+
+      <button class="px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 font-medium text-sm rounded-xl transition duration-150 active:scale-95 border border-red-200">
+        Danger Button
+      </button>
+
+      <button class="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-medium text-sm rounded-xl transition duration-150 shadow-sm active:scale-95">
+        Dark Action
+      </button>
+    </div>
+  </section>
+
+  <!-- 2. БЕЙДЖИ И ТЕГИ -->
+  <section class="space-y-4">
+    <h2 class="text-xl font-bold text-slate-800">2. Бейджи и Статусы (Badges)</h2>
+    <div class="flex flex-wrap gap-3">
+      <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+        Приём заявок открыт
+      </span>
+      <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+        Скоро окончание
+      </span>
+      <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200">
+        Завершена
+      </span>
+      <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
+        SCOPUS
+      </span>
+      <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-purple-50 text-purple-700 border border-purple-100">
+        eLIBRARY / РИНЦ
+      </span>
+    </div>
+  </section>
+
+  <!-- 3. ПОЛЯ ВВОДА -->
+  <section class="space-y-4 max-w-md">
+    <h2 class="text-xl font-bold text-slate-800">3. Поля ввода (Inputs)</h2>
+    <div class="space-y-3">
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Текстовое поле</label>
+        <input type="text" placeholder="Введите название..." class="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Выпадающий список</label>
+        <select class="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+          <option>Все направления</option>
+          <option>Информационные технологии</option>
+          <option>Физика и математика</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. КАРТОЧКА КОНФЕРЕНЦИИ -->
+  <section class="space-y-4">
+    <h2 class="text-xl font-bold text-slate-800">4. Карточка конференции (Conference Card)</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-sm hover:shadow-md transition duration-200 space-y-4">
+        <div class="flex items-center justify-between gap-2">
+          <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+            Регистрация до 15 ноября
+          </span>
+          <span class="text-xs text-slate-400 font-medium">Москва, Россия</span>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold text-slate-900 hover:text-blue-600 cursor-pointer transition">
+            International Conference on Software Engineering & AI 2026
+          </h3>
+          <p class="text-slate-500 text-sm mt-1 line-clamp-2">
+            Международная научно-практическая конференция, посвящённая современным методам искусственного интеллекта и программной инженерии.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
+          <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-blue-50 text-blue-700">SCOPUS</span>
+          <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-purple-50 text-purple-700">eLIBRARY</span>
+          <span class="text-xs text-slate-400 ml-auto">12–14 декабря 2026</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

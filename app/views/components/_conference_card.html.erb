@@ -1,0 +1,29 @@
+<div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition duration-200 space-y-4">
+  <div class="flex items-center justify-between gap-2">
+    <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+      Регистрация до <%= l(conference.submission_deadline, format: :long) %>
+    </span>
+    <span class="text-xs text-slate-400 font-medium"><%= conference.location %></span>
+  </div>
+
+  <div>
+    <h3 class="text-lg font-bold text-slate-900 hover:text-blue-600 transition">
+      <%= link_to conference.title, conference.website_url, target: "_blank", rel: "noopener" %>
+    </h3>
+    <p class="text-slate-500 text-sm mt-1 line-clamp-2">
+      <%= conference.description %>
+    </p>
+  </div>
+
+  <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
+    <% if conference.is_scopus? %>
+      <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-blue-50 text-blue-700">SCOPUS</span>
+    <% end %>
+    <% if conference.is_elibrary? %>
+      <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-purple-50 text-purple-700">eLIBRARY</span>
+    <% end %>
+    <span class="text-xs text-slate-400 ml-auto">
+      <%= l(conference.start_date, format: :short) %> – <%= l(conference.end_date, format: :short) %>
+    </span>
+  </div>
+</div>

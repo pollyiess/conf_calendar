@@ -1,0 +1,35 @@
+<header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      
+      <!-- Логотип -->
+      <div class="flex items-center gap-3">
+        <%= link_to root_path, class: "flex items-center gap-2 group" do %>
+          <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-black text-lg shadow-sm group-hover:bg-blue-700 transition">
+            AI
+          </div>
+          <span class="font-extrabold text-slate-900 text-lg tracking-tight">Conf_Cal</span>
+        <% end %>
+
+        <!-- Навигация -->
+        <nav class="hidden md:flex items-center gap-6 ml-8">
+          <%= link_to "Конференции", "#", class: "text-sm font-medium text-slate-600 hover:text-blue-600 transition" %>
+          <%= link_to "Умный подбор", "#", class: "text-sm font-medium text-slate-600 hover:text-blue-600 transition" %>
+          <%= link_to "Предложить конференцию", "#", class: "text-sm font-medium text-slate-600 hover:text-blue-600 transition" %>
+        </nav>
+      </div>
+
+      <!-- Пользовательский блок -->
+      <div class="flex items-center gap-3">
+        <% if user_signed_in? %>
+          <span class="text-sm font-medium text-slate-600"><%= current_user.email %></span>
+          <%= button_to "Выйти", destroy_user_session_path, method: :delete, class: "px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-xl transition" %>
+        <% else %>
+          <%= link_to "Войти", new_user_session_path, class: "text-sm font-medium text-slate-600 hover:text-blue-600 px-3 py-2 transition" %>
+          <%= link_to "Регистрация", new_user_registration_path, class: "px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition shadow-sm" %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</header>
