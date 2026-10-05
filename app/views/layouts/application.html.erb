@@ -1,31 +1,57 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Conf Calendar" %></title>
+    <title>AI Conf Cal — Календарь научных конференций</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Conf Calendar">
-    <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <body class="bg-gray-50 text-gray-900 font-sans antialiased min-h-screen flex flex-col">
+    <!-- Шапка сайта -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center space-x-8">
+          <a href="/" class="flex items-center space-x-2">
+            <span class="bg-blue-600 text-white font-bold text-xl px-2.5 py-1 rounded-lg">AI</span>
+            <span class="font-extrabold text-xl tracking-tight text-gray-900">Conf_Cal</span>
+          </a>
+          <nav class="hidden md:flex space-x-6">
+            <%= link_to "Конференции", root_path, class: "text-blue-600 font-semibold text-sm" %>
+            <a href="#" class="text-gray-600 hover:text-blue-600 text-sm font-medium transition">Умный подбор</a>
+            <a href="#" class="text-gray-600 hover:text-blue-600 text-sm font-medium transition">Предложить конференцию</a>
+          </nav>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <% if user_signed_in? %>
+            <span class="text-xs text-gray-500 font-medium"><%= current_user.email %></span>
+            <%= button_to "Выйти", destroy_user_session_path, method: :delete, class: "text-sm text-red-600 hover:text-red-800 font-medium cursor-pointer" %>
+          <% else %>
+            <%= link_to "Войти", new_user_session_path, class: "text-sm font-medium text-gray-700 hover:text-blue-600" %>
+            <%= link_to "Регистрация", new_user_registration_path, class: "bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition" %>
+          <% end %>
+        </div>
+      </div>
+    </header>
+
+    <!-- Системные flash-уведомления -->
+    <% if notice %>
+      <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg max-w-7xl mx-auto my-4 text-sm"><%= notice %></div>
+    <% end %>
+    <% if alert %>
+      <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg max-w-7xl mx-auto my-4 text-sm"><%= alert %></div>
+    <% end %>
+
+    <!-- Основной контент -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <%= yield %>
     </main>
+
+    <footer class="bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-500">
+      © 2026 AI Conf Cal. Все права защищены.
+    </footer>
   </body>
 </html>
