@@ -1,14 +1,11 @@
 Rails.application.routes.draw do
-  get "ui_kit/index"
-  root "pages#home"
+  root "conferences#index" # Сделаем список конференций главной страницей сайта
 
-  # Роут для UI Kit (будет работать только в режиме разработки)
-  if Rails.env.development?
-    get "ui_kit", to: "ui_kit#index"
-  end
+  get "ui_kit", to: "ui_kit#index" if Rails.env.development?
 
   devise_for :users
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
+  resources :conferences, only: [ :index, :show ]
+
   get "up" => "rails/health#show", as: :rails_health_check
 end

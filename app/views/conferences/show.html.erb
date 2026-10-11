@@ -1,0 +1,70 @@
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  
+  <!-- Кнопка назад -->
+  <div class="mb-6">
+    <%= link_to "← Назад к списку", root_path, class: "text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors" %>
+  </div>
+
+  <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-8 space-y-6">
+    
+    <!-- Шапка: Бейджи слева, локация в правом уголке -->
+    <div class="flex items-center justify-between gap-4 flex-wrap">
+      <div class="flex items-center space-x-2">
+        <% if @conference.is_scopus? %>
+          <span class="inline-flex items-center px-2.5 py-1 rounded text-xs font-semibold bg-blue-50 text-blue-700">SCOPUS</span>
+        <% end %>
+        <% if @conference.is_elibrary? %>
+          <span class="inline-flex items-center px-2.5 py-1 rounded text-xs font-semibold bg-purple-50 text-purple-700">eLIBRARY</span>
+        <% end %>
+      </div>
+
+      <!-- Локация в уголке с иконкой -->
+      <div class="flex items-center space-x-1.5 text-slate-500 text-xs font-medium bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
+        <svg class="w-4 h-4 text-indigo-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
+        <span><%= @conference.location %></span>
+      </div>
+    </div>
+
+    <!-- Заголовок -->
+    <h1 class="text-3xl font-bold text-slate-900"><%= @conference.title %></h1>
+
+    <!-- Два выровненных блока: Даты проведения и Подача заявок -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      
+      <!-- Даты проведения -->
+      <div class="bg-blue-50/60 border border-blue-100 p-5 rounded-xl flex flex-col justify-between">
+        <span class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-2">Даты проведения</span>
+        <span class="font-bold text-slate-900 text-base">
+          <%= l(@conference.start_date, format: :long) %> – <%= l(@conference.end_date, format: :long) %>
+        </span>
+      </div>
+
+      <!-- Подача заявок до -->
+      <div class="bg-emerald-50/60 border border-emerald-100 p-5 rounded-xl flex flex-col justify-between">
+        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-2">Подача заявок до</span>
+        <span class="font-bold text-slate-900 text-base">
+          <%= l(@conference.submission_deadline, format: :long) %>
+        </span>
+      </div>
+
+    </div>
+
+    <!-- Полное описание -->
+    <div class="prose max-w-none text-slate-600 space-y-2 pt-2">
+      <h3 class="text-lg font-bold text-slate-900">О конференции</h3>
+      <p class="whitespace-pre-line leading-relaxed"><%= @conference.description %></p>
+    </div>
+
+    <!-- Действия / Кнопка подачи заявки -->
+    <div class="flex items-center space-x-4 pt-6 border-t border-slate-100">
+      <% if @conference.website_url.present? %>
+        <%= link_to "Подать заявку", @conference.website_url, target: "_blank", rel: "noopener", class: "px-6 py-3 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm transition-colors" %>
+      <% end %>
+    </div>
+
+  </div>
+
+</div>

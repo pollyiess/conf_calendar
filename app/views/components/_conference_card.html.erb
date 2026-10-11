@@ -1,29 +1,53 @@
-<div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition duration-200 space-y-4">
-  <div class="flex items-center justify-between gap-2">
-    <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-      Регистрация до <%= l(conference.submission_deadline, format: :long) %>
-    </span>
-    <span class="text-xs text-slate-400 font-medium"><%= conference.location %></span>
-  </div>
-
+<div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition duration-200 space-y-4 flex flex-col justify-between">
+  
   <div>
-    <h3 class="text-lg font-bold text-slate-900 hover:text-blue-600 transition">
-      <%= link_to conference.title, conference.website_url, target: "_blank", rel: "noopener" %>
+    <!-- Верх: Бейджи слева, дата регистрации справа на одном уровне (выравнивание по верху) -->
+    <div class="flex items-start justify-between gap-3 mb-3">
+      <!-- Блок с рейтингами -->
+      <div class="flex flex-col gap-1.5 pt-0.5">
+        <% if conference.is_scopus? %>
+          <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-50 text-blue-700">SCOPUS</span>
+        <% end %>
+        <% if conference.is_elibrary? %>
+          <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-purple-50 text-purple-700">eLIBRARY</span>
+        <% end %>
+      </div>
+      
+      <!-- Дата регистрации -->
+      <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 whitespace-nowrap">
+        Регистрация до <%= l(conference.submission_deadline, format: :long) %>
+      </span>
+    </div>
+
+    <!-- Заголовок и описание -->
+    <h3 class="text-lg font-bold text-slate-900 hover:text-blue-600 transition mb-2">
+      <%= link_to conference.title, conference_path(conference) %>
     </h3>
-    <p class="text-slate-500 text-sm mt-1 line-clamp-2">
+    <p class="text-slate-500 text-sm line-clamp-2">
       <%= conference.description %>
     </p>
   </div>
 
-  <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
-    <% if conference.is_scopus? %>
-      <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-blue-50 text-blue-700">SCOPUS</span>
-    <% end %>
-    <% if conference.is_elibrary? %>
-      <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-purple-50 text-purple-700">eLIBRARY</span>
-    <% end %>
-    <span class="text-xs text-slate-400 ml-auto">
-      <%= l(conference.start_date, format: :short) %> – <%= l(conference.end_date, format: :short) %>
-    </span>
+  <!-- Низ: Место и даты проведения с иконками -->
+  <div class="pt-4 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+    
+    <!-- Место проведения -->
+    <div class="flex items-center space-x-2 text-slate-700 bg-slate-50 px-3 py-2 rounded-xl">
+      <svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+      </svg>
+      <span class="font-semibold truncate"><%= conference.location %></span>
+    </div>
+
+    <!-- Даты проведения -->
+    <div class="flex items-center space-x-2 text-slate-700 bg-slate-50 px-3 py-2 rounded-xl">
+      <svg class="w-4 h-4 text-indigo-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+      </svg>
+      <span class="font-semibold truncate"><%= l(conference.start_date, format: :short) %> – <%= l(conference.end_date, format: :short) %></span>
+    </div>
+
   </div>
+
 </div>

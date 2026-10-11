@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_05_050454) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_11_112045) do
+  create_table "bookmarks", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "conference_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conference_id"], name: "index_bookmarks_on_conference_id"
+    t.index ["user_id"], name: "index_bookmarks_on_user_id"
+  end
+
   create_table "conferences", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -37,4 +46,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_05_050454) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "bookmarks", "conferences"
+  add_foreign_key "bookmarks", "users"
 end

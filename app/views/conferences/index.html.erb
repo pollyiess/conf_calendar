@@ -1,0 +1,23 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  
+  <!-- Заголовок страницы -->
+  <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Предстоящие конференции</h1>
+    </div>
+  </div>
+
+  <!-- Сетка карточек с использованием твоего компонента -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @conferences.each do |conference| %>
+      <%= render "components/conference_card", conference: conference %>
+    <% end %>
+  </div>
+
+  <% if @conferences.empty? %>
+    <div class="text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-sm">
+      <p class="text-slate-500 text-lg">Пока нет предстоящих конференций.</p>
+    </div>
+  <% end %>
+
+</div>
