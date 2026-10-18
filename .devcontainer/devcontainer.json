@@ -1,0 +1,22 @@
+{
+  "name": "ConfCalendar Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/ruby:3.3",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": [
+        "rebornix.ruby",
+        "Shopify.ruby-lsp",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  },
+  "postCreateCommand": "bundle install && bin/rails db:prepare",
+  "forwardPorts": [5000],
+  "remoteUser": "vscode"
+}
