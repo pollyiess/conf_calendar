@@ -1,42 +1,30 @@
-Conference.destroy_all
+demo  = User.find_or_create_by!(email: "demo@example.com")  { |u| u.password = "password123" }
+User.find_or_create_by!(email: "demo2@example.com") { |u| u.password = "password123" }
 
-Conference.create!([
-  {
-    title: "International Conference on Software Engineering & AI 2026",
-    description: "Международная научно-практическая конференция, посвящённая современным методам искусственного интеллекта и программной инженерии.",
-    start_date: "2026-12-12",
-    end_date: "2026-12-14",
-    submission_deadline: "2026-11-15",
-    location: "Москва, Россия",
-    website_url: "https://example.com/icseai2026",
-    is_scopus: true,
-    is_elibrary: true,
-    status: :published
-  },
-  {
-    title: "Всероссийский симпозиум по высокопроизводительным вычислениям",
-    description: "Обсуждение актуальных вопросов суперкомпьютерных технологий, параллельного программирования и обработки больших данных.",
-    start_date: "2026-10-20",
-    end_date: "2026-10-22",
-    submission_deadline: "2026-10-10",
-    location: "Санкт-Петербург, Россия",
-    website_url: "https://example.com/hpc2026",
-    is_scopus: false,
-    is_elibrary: true,
-    status: :published
-  },
-  {
-    title: "Конференция по кибербезопасности и сетевым технологиям",
-    description: "Ежегодный форум исследователей и практиков в сфере информационной безопасности, криптографии и защиты данных.",
-    start_date: "2026-11-05",
-    end_date: "2026-11-07",
-    submission_deadline: "2026-10-25",
-    location: "Казань, Россия",
-    website_url: "https://example.com/cybersec2026",
-    is_scopus: true,
-    is_elibrary: false,
-    status: :published
-  }
-])
+today = Date.current
+[
+  { title: "International Conference on Software Engineering & AI", location: "Москва, Россия",
+    is_scopus: true, is_elibrary: true, start: 60, deadline: 30,
+    description: "Методы искусственного интеллекта и программной инженерии." },
+  { title: "Всероссийский симпозиум по высокопроизводительным вычислениям", location: "Санкт-Петербург, Россия",
+    is_scopus: false, is_elibrary: true, start: 45, deadline: 20,
+    description: "Суперкомпьютерные технологии и параллельное программирование." },
+  { title: "Конференция по кибербезопасности и сетевым технологиям", location: "Казань, Россия",
+    is_scopus: true, is_elibrary: false, start: 40, deadline: 10,
+    description: "Информационная безопасность, криптография, защита данных." }
+].each do |c|
+  Conference.find_or_create_by!(title: c[:title]) do |conf|
+    conf.description = c[:description]
+    conf.location = c[:location]
+    conf.is_scopus = c[:is_scopus]
+    conf.is_elibrary = c[:is_elibrary]
+    conf.start_date = today + c[:start]
+    conf.end_date = today + c[:start] + 2
+    conf.submission_deadline = today + c[:deadline]
+    conf.website_url = "https://example.com"
+    conf.creator = demo
+    conf.status = :published
+  end
+end
 
-puts "Создано конференций: #{Conference.count}"
+puts "Конференций: #{Conference.count}, пользователей: #{User.count}"
