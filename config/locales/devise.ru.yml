@@ -12,6 +12,7 @@ ru:
           attributes:
             email:
               taken: "уже существует"
+              invalid: "имеет неверный формат"
             password_confirmation:
               confirmation: "не совпадают"
       messages:

@@ -18,6 +18,10 @@ module ConfCalendar
 
     # Устанавливаем русский язык по умолчанию
     config.i18n.default_locale = :ru
+    config.i18n.available_locales = [ :ru, :en ]
+
+    # Принудительно включаем локаль для всех запросов
+    config.i18n.fallbacks = [ :ru ]
 
     # Configuration for the application, engines, and railties goes here.
     #

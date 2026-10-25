@@ -1,0 +1,25 @@
+<div class="max-w-7xl mx-auto py-8 space-y-10">
+  <h1 class="text-3xl font-bold text-slate-900">Профиль: <%= current_user.email %></h1>
+
+  <section>
+    <h2 class="text-xl font-bold mb-4">Мои конференции</h2>
+    <% if @created.empty? %>
+      <p class="text-slate-500 text-sm">Вы ещё ничего не создали.</p>
+    <% else %>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <%= render partial: "components/conference_card", collection: @created, as: :conference %>
+      </div>
+    <% end %>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-bold mb-4">Избранное</h2>
+    <% if @bookmarked.empty? %>
+      <p class="text-slate-500 text-sm">В избранном пока пусто.</p>
+    <% else %>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <%= render partial: "components/conference_card", collection: @bookmarked, as: :conference %>
+      </div>
+    <% end %>
+  </section>
+</div>

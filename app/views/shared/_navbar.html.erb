@@ -19,12 +19,12 @@
       <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-gray-600">
         <%= link_to "Конференции", root_path, class: "hover:text-blue-600 transition-colors" %>
         <%= link_to "Умный подбор", "#", class: "hover:text-blue-600 transition-colors" %>
-        <%= link_to "Предложить конференцию", "#", class: "hover:text-blue-600 transition-colors" %>
+        <%= link_to "Создать конференцию", new_conference_path, class: "hover:text-blue-600 transition-colors" %>
       </nav>
 
       <div class="flex items-center space-x-3">
         <% if user_signed_in? %>
-          <span class="text-sm font-medium text-gray-700 hidden sm:inline"><%= current_user.email %></span>
+          <%= link_to current_user.email, profile_path, class: "text-sm font-medium text-gray-700 hidden sm:inline hover:text-blue-600 transition-colors" %>
           <%= link_to "Выйти", destroy_user_session_path, data: { turbo_method: :delete }, class: "px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors" %>
         <% else %>
           <%= link_to "Войти", new_user_session_path, class: "px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors" %>

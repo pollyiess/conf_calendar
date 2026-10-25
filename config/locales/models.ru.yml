@@ -1,0 +1,11 @@
+ru:
+  activerecord:
+    attributes:
+      conference:
+        title: Название
+        description: Описание
+        location: Место проведения
+        start_date: Дата начала
+        end_date: Дата окончания
+        submission_deadline: Срок подачи заявок
+        website_url: Ссылка на сайт

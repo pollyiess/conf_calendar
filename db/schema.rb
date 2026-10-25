@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_11_112045) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_20_175614) do
   create_table "bookmarks", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "conference_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_bookmarks_on_conference_id"
+    t.index ["user_id", "conference_id"], name: "index_bookmarks_on_user_id_and_conference_id", unique: true
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
@@ -28,11 +29,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_11_112045) do
     t.date "submission_deadline"
     t.string "location"
     t.string "website_url"
-    t.boolean "is_scopus"
-    t.boolean "is_elibrary"
-    t.integer "status"
+    t.boolean "is_scopus", default: false
+    t.boolean "is_elibrary", default: false
+    t.integer "status", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "creator_id"
+    t.index ["creator_id"], name: "index_conferences_on_creator_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -49,4 +52,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_11_112045) do
 
   add_foreign_key "bookmarks", "conferences"
   add_foreign_key "bookmarks", "users"
+  add_foreign_key "conferences", "users", column: "creator_id"
 end

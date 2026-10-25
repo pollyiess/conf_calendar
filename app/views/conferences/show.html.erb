@@ -59,11 +59,31 @@
     </div>
 
     <!-- Действия / Кнопка подачи заявки -->
-    <div class="flex items-center space-x-4 pt-6 border-t border-slate-100">
-      <% if @conference.website_url.present? %>
-        <%= link_to "Подать заявку", @conference.website_url, target: "_blank", rel: "noopener", class: "px-6 py-3 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm transition-colors" %>
-      <% end %>
-    </div>
+    <div class="flex flex-wrap items-center gap-3 pt-6 border-t border-slate-100">
+  <% if @conference.website_url.present? %>
+    <%= link_to "Подать заявку", @conference.website_url, target: "_blank", rel: "noopener",
+          class: "px-6 py-3 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm transition-colors" %>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <% if current_user.bookmarked?(@conference) %>
+      <%= button_to "Убрать из избранного", conference_bookmark_path(@conference), method: :delete,
+            class: "px-5 py-3 text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl" %>
+    <% else %>
+      <%= button_to "В избранное", conference_bookmark_path(@conference),
+            class: "px-5 py-3 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-xl" %>
+    <% end %>
+  <% else %>
+    <%= button_to "В избранное", conference_bookmark_path(@conference), method: :post,
+          class: "px-5 py-3 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-xl cursor-pointer" %>
+  <% end %>
+
+  <% if @conference.owned_by?(current_user) %>
+    <%= link_to "Редактировать", edit_conference_path(@conference), class: "px-4 py-3 text-sm font-medium text-slate-600" %>
+    <%= button_to "Удалить", conference_path(@conference), method: :delete,
+          data: { turbo_confirm: "Удалить конференцию?" }, class: "px-4 py-3 text-sm font-medium text-red-600" %>
+  <% end %>
+</div>
 
   </div>
 
