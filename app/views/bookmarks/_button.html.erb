@@ -1,0 +1,9 @@
+<div id="bookmark_button">
+  <% if user_signed_in? && current_user.bookmarked?(conference) %>
+    <%= button_to "Убрать из избранного", conference_bookmark_path(conference), method: :delete,
+          class: "px-5 py-3 text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer" %>
+  <% else %>
+    <%= button_to "В избранное", conference_bookmark_path(conference), method: :post,
+          class: "px-5 py-3 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors cursor-pointer" %>
+  <% end %>
+</div>

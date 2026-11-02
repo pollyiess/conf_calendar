@@ -1,4 +1,8 @@
 class Conference < ApplicationRecord
+  CATALOG_ANY = "any".freeze
+
+  after_create_commit  :broadcast_to_catalog
+  after_destroy_commit :broadcast_removal_from_catalog
   belongs_to :creator, class_name: "User", optional: true, inverse_of: :created_conferences
   has_many :bookmarks, dependent: :destroy
   has_many :bookmarked_by_users, through: :bookmarks, source: :user
@@ -23,6 +27,26 @@ class Conference < ApplicationRecord
     else all
     end
   }
+
+  def self.catalog_stream(indexing: nil, location: nil)
+    indexing_key = %w[scopus elibrary].include?(indexing.to_s) ? indexing.to_s : CATALOG_ANY
+    location_key = location.present? ? Digest::SHA1.hexdigest(location.to_s)[0, 16] : CATALOG_ANY
+    [ "catalog", indexing_key, location_key ]
+  end
+
+  def listed_in_catalog?
+    published? && submission_deadline >= Date.current
+  end
+
+  def catalog_streams
+    indexings = [ nil ]
+    indexings << "scopus"   if is_scopus?
+    indexings << "elibrary" if is_elibrary?
+
+    indexings.product([ nil, location ]).map do |indexing, loc|
+      Conference.catalog_stream(indexing: indexing, location: loc)
+    end.uniq
+  end
 
   def self.filtered(params)
     published.upcoming.indexed_in(params[:indexing]).in_location(params[:location])
@@ -59,5 +83,19 @@ class Conference < ApplicationRecord
   def submission_deadline_before_start_date
     return if submission_deadline.blank? || start_date.blank?
     errors.add(:submission_deadline, "должен быть не позже даты начала") if submission_deadline > start_date
+  end
+
+  def broadcast_to_catalog
+    return unless listed_in_catalog?
+
+    catalog_streams.each do |stream|
+      broadcast_prepend_to(*stream, target: "conferences_grid",
+                           partial: "conferences/catalog_item",
+                           locals: { conference: self, highlight: true })
+    end
+  end
+
+  def broadcast_removal_from_catalog
+    catalog_streams.each { |stream| broadcast_remove_to(*stream) }
   end
 end

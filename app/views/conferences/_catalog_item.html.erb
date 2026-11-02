@@ -1,0 +1,4 @@
+<% highlight = local_assigns.fetch(:highlight, false) %>
+<%= tag.div id: dom_id(conference), class: "contents", data: { controller: ("highlight" if highlight) } do %>
+  <%= render "components/conference_card", conference: conference %>
+<% end %>

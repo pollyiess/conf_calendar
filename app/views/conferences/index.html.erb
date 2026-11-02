@@ -1,33 +1,38 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  
-  <!-- Заголовок страницы -->
-  <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-    <div>
-      <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Предстоящие конференции</h1>
-    </div>
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Предстоящие конференции</h1>
   </div>
 
-
-  <%= form_with url: conferences_path, method: :get, class: "flex flex-wrap gap-3 mb-6" do %>
+  <%= form_with url: conferences_path, method: :get,
+        class: "flex flex-wrap items-center gap-3 mb-6",
+        data: { turbo_frame: "conferences_list", turbo_action: "advance" } do %>
+    
     <%= select_tag :indexing,
-          options_for_select([["Любая индексация", ""], ["Scopus", "scopus"], ["eLibrary", "elibrary"]], params[:indexing]),
+          options_for_select([ [ "Любая индексация", "" ], [ "Scopus", "scopus" ], [ "eLibrary", "elibrary" ] ], @filters[:indexing]),
           class: "rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm" %>
+          
     <%= select_tag :location,
-          options_for_select([["Все города", ""]] + @locations, params[:location]),
+          options_for_select([ [ "Все города", "" ] ] + @locations, @filters[:location]),
           class: "rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm" %>
-    <%= submit_tag "Применить", name: nil, class: "px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-xl cursor-pointer" %>
-    <%= link_to "Сбросить", conferences_path, class: "px-4 py-2 text-sm text-slate-600" %>
+          
+    <%= submit_tag "Применить", name: nil, 
+          class: "px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-xl cursor-pointer transition-colors" %>
+          
+    <%= link_to "Сбросить", conferences_path, 
+          data: { turbo_frame: "conferences_list", turbo_action: "advance" },
+          class: "px-4 py-2 text-sm text-slate-600 hover:text-slate-900 transition-colors" %>
   <% end %>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <% @conferences.each do |conference| %>
-      <%= render "components/conference_card", conference: conference %>
-    <% end %>
-  </div>
+  <%= turbo_frame_tag "conferences_list", data: { turbo_action: "advance" } do %>
+    <%= turbo_stream_from(*Conference.catalog_stream(indexing: @filters[:indexing], location: @filters[:location])) %>
 
-  <% if @conferences.empty? %>
-    <div class="text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-sm">
-      <p class="text-slate-500 text-lg">Пока нет предстоящих конференций.</p>
+    <div id="conferences_grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="hidden only:block col-span-full text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-sm">
+        <p class="text-slate-500 text-lg">Ничего не найдено.</p>
+        <p class="text-slate-400 text-sm mt-1">Измените фильтры, новые конференции появятся здесь сами.</p>
+      </div>
+      <%= render partial: "conferences/catalog_item", collection: @conferences, as: :conference %>
     </div>
   <% end %>
 

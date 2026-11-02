@@ -4,7 +4,8 @@ class ConferencesController < ApplicationController
   before_action :require_owner!, only: %i[edit update destroy]
 
   def index
-    @conferences = Conference.filtered(filter_params)
+    @filters = filter_params
+    @conferences = Conference.filtered(@filters)
     @locations = Conference.published.distinct.order(:location).pluck(:location)
   end
 
@@ -35,7 +36,7 @@ class ConferencesController < ApplicationController
 
   def destroy
     @conference.destroy
-    redirect_to profile_path, notice: "Конференция удалена", status: :see_other
+    redirect_to root_path, notice: "Конференция удалена", status: :see_other
   end
 
   private

@@ -1,5 +1,11 @@
 ru:
   activerecord:
+    errors:
+    models:
+      user:
+        attributes:
+          email:
+            invalid: некорректный формат
     attributes:
       conference:
         title: Название
