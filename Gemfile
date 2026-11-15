@@ -53,7 +53,7 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   # Инструменты для тестирования
-  gem "rspec-rails", "~> 6.0"
+  gem "rspec-rails", "~> 8.1"
   gem "factory_bot_rails"
   gem "shoulda-matchers", "~> 6.0"
 end
